@@ -2,7 +2,7 @@
 
 Fiddling With Karaoke is a Max/MSP implementation of a singalong karaoke game.
 
-![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/mainpresentation.jpg)
+![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Pictures/mainpresentation.jpg)
 
 
 ##Overview
