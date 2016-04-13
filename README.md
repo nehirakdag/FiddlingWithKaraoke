@@ -59,7 +59,9 @@ Some of the objectives I aimed to achieve as part of this project are as follows
 
 ##Conclusion & Future Goals
 I learned a lot about the details of real-time processing within a Max patch, and took my first steps towards Max/MSP Live and Jitter with this project. Unlike my previous project, I implemented this one without a specific product or theoretical model to use as a starting point since I abandoned the YIN algorithm. Implementing a product that has good applications from simply the pitch~ object and my general knowledge of Max/MSP is an encouraging point for my future projects and research. Having an accurate comparison of someone's singing with many mainstream songs at my disposal will serve as a useful tool, both for technical and general purposes. I can always use the game's baseline ideas of pitch detection and frequency tracking that I learned in MUMT307 as technical building blocks of future projects.
+
 I think this project turned out to be a successful implementation, given the time limit that I had and my limited knowledge of Jitter tools. Even though I could not make a very elaborate demo during class time, I think the videos I uploaded and linked to this page displays a more accurate image of the project's capabilities. I also realized my singing is a bit better (although not too much) than I expected it to be.
+
 Some of my future goals to add to this project include an interface for real-time lyrics following. I would also like to expand from MIDI to all forms of audio files as a source of playback during the karaoke singalong. I will perfect the visualization of the two frequency inputs after further exploring Jitter. 
 
 
