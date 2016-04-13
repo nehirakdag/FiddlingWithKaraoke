@@ -49,6 +49,7 @@ Just like a main program, the main patch is where all the components come togeth
 5) Cue the visualizer to start drawing the two frequencies from the toggle switch at the bottom left corner of the patch
 6) Change the visualizer's display parameters such as the drawing mode (area, lines, points etc.) lower bound, upper bound, background and drawings' colors.
 7) Signal the DSP to start or stop, in order to start recording their input singing.
+8) Set the sensitivity of the ADC input by declaring a threshold magnitude value. Any value below it will not be processed and considered as having a frequency of 0 Hz.
 
 ![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/mainpatch.jpg)
 
@@ -56,7 +57,7 @@ Just like a main program, the main patch is where all the components come togeth
 - The main patch has the following flow of computation: There are two sources of input, the MIDI file and the edadc~ object. The MIDI file's information is retrieved from the MidiProcessing patch which is controlled by its parameters visible above it. The microphone input is sent to the patcher "pitch" to be analyzed for its frequency and magnitude content. The frequency outputs of these two patches are collected in the "eval" patch for difference calculation. This patch also handles special cases. The two inputs also get sent to the draw_note patch, which uses Jitter objects like catch~ in order to send the proper information to the jit.graph object and draw the lines corresponding the two notes at the bottom of the patch. 
 
 Patch #2: "Patcher pitch"
-This patcher can be considered as the main building block of the program. It uses the pitch~ object to decompose the microphone input to its frequency and magnitude values. The output MIDI value of the input is converted to the corresponding frequency value. There also is an if statement that serves as a limiting factor. Amplitude values below the pre determined threshold are assigned 0 frequencies so that the are not processed by the eval patch or the draw_notes patch. This way, the ambient noise is taken out of the picture and the playback does not get picked up by the microphone input as legitimate sounds to be evaluated. The frequency and magnitude results of the processed ADC input sound is returned by its outlets.
+This patcher can be considered as the main building block of the program. It uses the pitch~ object to decompose the microphone input to its frequency and magnitude values. The output MIDI value of the input is converted to the corresponding frequency value. There also is an if statement that serves as a limiting factor. Amplitude values below the input threshold that is fed to the patch from the second inlet are assigned frequencie values of 0 Hz so that the are not processed by the eval patch or the draw_notes patch. This way, the ambient noise is taken out of the picture and the playback does not get picked up by the microphone input as legitimate sounds to be evaluated. We have this setting to ensure ambient noise can be removed from the processing by calibrating the program depending on the surroundings. The frequency and magnitude results of the processed ADC input sound is returned by its outlets.
 
 ![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/patcher_pitch.jpg)
 
