@@ -35,6 +35,7 @@ Fiddling With Karaoke is built on a total of 6 Max patches, each nested as funct
 - MIDI file processing and playback, finding the vocals track within its (possibly) multiple tracks and tracking its note events and frequencies
 - Evaluation and comparison of the two frequency values and their behavior in extreme cases
 - Coming up with a dynamic, realtime scoring convention for the processed data and its evaluation
+- Using jitter objects to capture the frequencies into matrices and draw appropriate lines
 - Visualization of the results in a flexible realtime manner as a user interface
 
 So I decided to make a separate patch for each of these issues. The main patch serves as the display of the results and is a user interface by itself in presentation mode. Here are the details of each patch...
@@ -69,10 +70,31 @@ The purpose of this patcher is to evaluate the instantaneous difference of the t
 
 ![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/patcher_eval.jpg)
 
-Patch #4: "Patcher score"
-
-
+Patch #5: "Patcher score"
 - The following formula is used to keep track of the current score:
+![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/scoreformula.jpg)
+,where n<sub>elements</sub> is the number of note events currently ocurred, l<sub>i</sub> is the i'th element in the list l (explained below), and l<sub>max</sub> is the current maximum value in the list. Each note event triggers the current difference between the (scaled depending on the game setting) adc input frequency and the target frequency to be written to a list, given the name l<sub>i</sub>. We will have a list l containing differences of frequency values during note events. Each element in this list is divided by the current maximum element in the list for normalization. The current score is calculated by summing each element of the list, dividing it by the number of elements, subtracting the result from 1 and multiplying by 100. The score patch and its nested calc_score patch serve to implement the methodology described above.
+
+The patcher "score" takes 6 inlets as follows in respective order: 1) the (scaled) frequency output of the adc, 2) the difference of the (possibly scaled) frequency output and the target frequency, 3) the target frequency, 4) a 0 or 1 output corresponding to a current note event (the output of the second outlet of the MidiProcess patch), 5) a button to clear the current buffer any time it is pressed, 6) a "dump" message box that will trigger the current list of values to be processed in each note event.
+
+There is also some scaling going on in this patch for extreme cases. Sometimes, the pitch~ (or fiddle~ when I used it instead earlier) object produced spikes in the input adc frequency for reasons unknown to me. If these spikes happened to occur during note events, then there would be an abrupt difference value getting written to the list l. These values would end up causing disruptions in the score calculations. So my solution to it was to check if the difference is greater than the target frequency's value, then the target frequency would be written as the difference instead. This way, I aimed to put a ceiling value to the list's maximum by the pitch of the current note played. It seems to produce good results, as the scoring convention is pretty consistent in the end. 
+
+I use sig~ and snapshot~ objects to capture the current difference values during note events to write them to the list created by the capture object. Furthermore, each note event triggers a "dump" message being passed to this capture object, so we have a list that gains an additional element per note, but this list also gets sent for processing on each note event as well. This is how I achieve realtime processing of the current score. The select 1 object is used to trigger the objects whose functionalities rely on note events. The counter object simply keeps track of the number of items in the list by counting note events so that we can use this value when we average the list. This patcher has a single outlet which receives the current score calculated in the subpatch "calc_score".
+
+![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/patcher_score.jpg)
+
+Patch #6: "Patcher calc_score"
+This patcher has 5 inlets which take the following in respective order: 1) the list l which is kept in the capture object and gets sent for each note event, 2) the current value that is written to capture on the next note event (l<sub>i</sub>), 3) the current counter value (n<sub>elements</sub>), 4) a 0 or 1 output corresponding to a current note event (the output of the second outlet of the MidiProcess patch), 5) a "clear" message to reset the contents of the list l and dump the current calculations for a new, fresh game.
+
+We have a zl group object which is needed because we have to have l in list form. The capture object dumps its contents in sequential order when a "dump" message is passed to it. We feed the contents of this zl group to a maximum object to find the current maximum of the list, which is updated dynamically. 
+
+At this point, I had an issue with the scoring convention. If I divided each element by the global maximum, then my calculations got disrupted because I can only write the current target frequencies as the maximum error at each note event. If the user was not singing at all, large values corresponding to maximum errors would get written to the list. However, as soon as there is a higher value written, and if I use that global maximum as the number to divide each element, then the previous maximum error would seem like a value that was partially correct. In order to get past this, I found that correct calculations are possible and easy to achieve when I divide the currenct value by the maximum seen so far, instead of the global maximum. This way, maximum errors would result in a 1 being written to that index, and perfect note hits would be 0's and everything in between would be normalized properly. The capture element in this patch stores the normalized list of values and is updated on every note event. This new list is iterated by the zl sum object, and the sum of its values are stored to a message box, divided by the current number of elements (the / 1. object), subtracted by 1 and multplied by 100 to calculate the result as indicated by our formula (the -1. and *-100. objects).
+
+The current maximum value written to the list and the current score is returned by the two outlets respectively.
+
+![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/patcher_calc_score.jpg)
+
+
 
 
 ##Example Usage
