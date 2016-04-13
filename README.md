@@ -113,7 +113,7 @@ Note: The current score takes some number of initial readings to stabilize to an
 (Videos are also downloadable in raw format in the website's directory)
 
 - [Introduction - Functionality and Basics] (https://www.youtube.com/watch?v=swFG1WFQcDs)
-- [Highway to Hell (AC/DC) - FiddlingWithKaraoke Sing-along] (https://www.youtube.com/watch?v=PeUtHIZ7Ylo) Apologies for the poor quality of this video. Kind of hard to see the frequency visualizations...
+- [Highway to Hell (AC/DC) - FiddlingWithKaraoke Sing-along] (https://www.youtube.com/watch?v=PeUtHIZ7Ylo) Apologies for the poor quality of this video. It got compressed by YouTube. Kind of hard to see the frequency visualizations...
 - [Hey You (Pink Floyd) - FiddlingWithKaraoke Sing-along] (https://www.youtube.com/watch?v=MnPW9TLfPqQ)
 
 ##Challenging Issues
