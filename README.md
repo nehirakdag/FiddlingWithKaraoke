@@ -65,7 +65,15 @@ The "MidiProcessing" patcher is the next major building block of Fiddling With K
 ![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/patcher_MidiProcess.jpg)
 
 Patch #4: "Patcher eval"
-This patcher takes the following 4 inputs in respective order: the game's current difficulty setting, the frequency of the current adc input, the frequency of the current MIDI vocals track note, a 0 or 1 output corresponding to a current note event (the output of the second outlet of the MidiProcess patch). The first inlet serves as a switch for two switches. There are two outcomes If the game is currently in Easy Mode, the two switches will take the scaled value for the adc frequency 
+The purpose of this patcher is to evaluate the instantaneous difference of the two input frequencies and scale them if necessary depending on the game mode. It takes the following 4 inputs in respective order: the game's current difficulty setting, the frequency of the current adc input, the frequency of the current MIDI vocals track note, a 0 or 1 output corresponding to a current note event (the output of the second outlet of the MidiProcess patch). The first inlet serves as a switch for two switches. There are two possible values that can be used as the input coming from the adc during evaluation depending on the game's current difficulty. If the game is currently in Easy Mode, the two switches will take the scaled value for the adc frequency such that if there is a smaller difference than the target frequency and an octave shifted adc input frequency, then the acd input gets shifted by an octave. In Hard Mode, there is no such scaling and the microphone input simply gets fed as the output of the switches. The first two outlets of the patch simply output the (possibly scaled) adc input frequency and the target frequency respectively. Finally, the absolute value of the difference of these two outputs is fed to the third outlet.
+
+![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/patcher_eval.jpg)
+
+Patch #4: "Patcher score"
+
+
+- The following formula is used to keep track of the current score:
+
 
 ##Example Usage
 (Videos are also downloadable in raw format in the website's directory)
