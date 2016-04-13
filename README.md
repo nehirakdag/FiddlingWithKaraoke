@@ -1,6 +1,8 @@
 # FiddlingWithKaraoke
 
-Fiddling With Karaoke is a Max/MSP implementation of a singalong karaoke game. (Refer to the Demonstration section for demo videos)
+Fiddling With Karaoke is a Max/MSP implementation of a singalong karaoke game. 
+
+(Refer to the Demonstration section for demo videos)
 
 ![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/mainpresentation.jpg)
 
@@ -104,6 +106,7 @@ The patch also contains a small subpatch "catch~" that declares the attributes o
 
 ![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/p_catch.jpg)
 
+Note: The current score takes some number of initial readings to stabilize to an accurate range. The first few notes might produce current scores of negative values, or occasional large jumps within consecutive notes. There is a "warmup" period initially, and it should be noted that these values will behave as expected once a certain number of notes are read...
 
 
 ##Demonstration
