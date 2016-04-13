@@ -1,6 +1,6 @@
 # FiddlingWithKaraoke
 
-Fiddling With Karaoke is a Max/MSP implementation of a singalong karaoke game.
+Fiddling With Karaoke is a Max/MSP implementation of a singalong karaoke game. (Refer to the Demonstration section for demo videos)
 
 ![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/mainpresentation.jpg)
 
@@ -106,10 +106,12 @@ The patch also contains a small subpatch "catch~" that declares the attributes o
 
 
 
-##Example Usage
+##Demonstration
 (Videos are also downloadable in raw format in the website's directory)
 
+- [Introduction - Functionality and Basics] https://www.youtube.com/watch?v=swFG1WFQcDs
 - 
+- [Hey You (Pink Floyd) - Singalong with FiddlingWithKaraoke] https://www.youtube.com/watch?v=MnPW9TLfPqQ
 
 ##Challenging Issues
 - My implementation involves realtime playback of a MIDI file and the user performing a singalong. However, it must make sure that the output of the file is not picked up by the microphone as the user is singing. Otherwise, the sung frequencies can not easily be picked up by the input ADC and incorrect results can be observed. During the time of my presentation at class, I was using an older version of my main patch that I had not optimized for ambient noise protection. Furthermore, there were loud drums sound coming from upstairs which produced a lot of ambient noise and interfered with my attempts to sing properly. Soon after, I fixed these issues and updated the main patch so the input is not sensitive enough to pick up the playback noise.
