@@ -134,3 +134,5 @@ Some of my future goals to add to this project include an interface for real-tim
 
 
 ##Resources
+1- ["Fiddle~"] (http://vud.org/max/)
+2- ["Pitch~"] (http://web.media.mit.edu/~tristan/maxmsp.html)
