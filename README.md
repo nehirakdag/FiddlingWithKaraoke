@@ -23,19 +23,34 @@ As I was brainstorming on what I could do for this project, I realized that the 
 
 I also wanted a partly visual implementation for this assignment. One of the applications that immediately came to mind after coincidental use of similar commercial games, I decided to make a karaoke game which can display to the user how well they sung. It would display the frequency that the singer needs to hit and the actual frequency they sing in an effective real time manner.
 Some of the objectives I aimed to achieve as part of this project are as follows:
-- My voice is terrible! I'm not a big fan of karaoke in front of other people because of this. I wanted to see how well I sing in a karaoke game which I could freely use in any context I wish.
-- Get comfortable with using Max/MSP in a real-time context and add visual processing elements to a Max patch using Jitter objects to prepare for my upcoming MUMT classes.
+- My voice is terrible! I'm not a big fan of karaoke in front of other people because of this. I wanted to see how well I sing in a karaoke game which I could freely use in any context I wish, by myself or with others.
+- To get comfortable with using Max/MSP in a real-time context and add visual processing elements to a Max patch using Jitter objects to prepare for my upcoming MUMT classes.
 - I wanted to integrate realtime processing of pitch detection with a pre-set input file that the user would try to mimic.
 - Implement a conventional scoring algorithm that complements this whole process and gives real-time feedback about the success of the user's singing.
 
 
 #Design & Implementation
+Fiddling With Karaoke is built on a total of 6 Max patches, each nested as functional calls within the main game patch. I wanted to make use of modularity and abstraction in my project as a software-based implementation should do so. I break down different tasks to different patchers and deal with them separately. As I was starting my project, I made an outline of the problems that I have to solve when implementing the patch. These included the following:
+- Audio input pitch detection and processing (with threshold values for input pickup)
+- MIDI file processing and playback, finding the vocals track within its (possibly) multiple tracks and tracking its note events and frequencies
+- Evaluation and comparison of the two frequency values and their behavior in extreme cases
+- Coming up with a dynamic, realtime scoring convention for the processed data and its evaluation
+- Visualization of the results in a flexible realtime manner as a user interface
 
+So I decided to make a separate patch for each of these issues. The main patch serves as the display of the results and is a user interface by itself in presentation mode. Here are the details of each patch...
 
-##Procedure
+Patch #1: The Main Patch (fiddlingWithKaraoke)
+Just like a main program, the main patch is where all the components come together. The toggles for input processing and display take up the majority of the space in the patch. The user has many options here. They can:
+1) Read, start, stop the MIDI file processing with the same named message boxes at the top right hand corner of the screen. They can (and should) also declare the vocal track # (known prior to the execution of the game). These parameters work with the MIDI processing patch
+2) Set the game difficulty by choosing among Easy Mode and Hard Mode.
+3) Clear the current score to start a new, fresh game from the indicated button at the top right hand side
+4) Look at the instantaneous numerical values of the frequencies sung and expected by the MIDI vocals track, as well as the current score
+5) Cue the visualizer to start drawing the two frequencies from the toggle switch at the bottom left corner of the patch
+6) Change the visualizer's display parameters such as the drawing mode (area, lines, points etc.) lower bound, upper bound, background and drawings' colors.
 
+![Alt text](https://github.com/nehirakdag/Drumduino/blob/master/Images/mainpatch.jpg)
 
-##Software
+- In easy mode (also called Octave Mode), the user is allowed to sing an octave higher or lower than the expected value. The evaluation patch will simply consider which of the possibilities is closer to the frequency of the MIDI vocals track during its note events and take that as the input frequency. This way, the user does not have to hit the notes exactly to get a perfect score. They can simply sing an octave lower, for example, and still get all the points possible. Hard mode has no such facilitations, and the user must hit every note by the exact frequency to obtain the maximum score.
 
 
 ##Example Usage
