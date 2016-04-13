@@ -47,11 +47,25 @@ Just like a main program, the main patch is where all the components come togeth
 4) Look at the instantaneous numerical values of the frequencies sung and expected by the MIDI vocals track, as well as the current score
 5) Cue the visualizer to start drawing the two frequencies from the toggle switch at the bottom left corner of the patch
 6) Change the visualizer's display parameters such as the drawing mode (area, lines, points etc.) lower bound, upper bound, background and drawings' colors.
+7) Signal the DSP to start or stop, in order to start recording their input singing.
 
-![Alt text](https://github.com/nehirakdag/Drumduino/blob/master/Images/mainpatch.jpg)
+![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/mainpatch.jpg)
 
 - In easy mode (also called Octave Mode), the user is allowed to sing an octave higher or lower than the expected value. The evaluation patch will simply consider which of the possibilities is closer to the frequency of the MIDI vocals track during its note events and take that as the input frequency. This way, the user does not have to hit the notes exactly to get a perfect score. They can simply sing an octave lower, for example, and still get all the points possible. Hard mode has no such facilitations, and the user must hit every note by the exact frequency to obtain the maximum score.
+- The main patch has the following flow of computation: There are two sources of input, the MIDI file and the edadc~ object. The MIDI file's information is retrieved from the MidiProcessing patch which is controlled by its parameters visible above it. The microphone input is sent to the patcher "pitch" to be analyzed for its frequency and magnitude content. The frequency outputs of these two patches are collected in the "eval" patch for difference calculation. This patch also handles special cases. The two inputs also get sent to the draw_note patch, which uses Jitter objects like catch~ in order to send the proper information to the jit.graph object and draw the lines corresponding the two notes at the bottom of the patch. 
 
+Patch #2: "Patcher pitch"
+This patcher can be considered as the main building block of the program. It uses the pitch~ object to decompose the microphone input to its frequency and magnitude values. The output MIDI value of the input is converted to the corresponding frequency value. There also is an if statement that serves as a limiting factor. Amplitude values below the pre determined threshold are assigned 0 frequencies so that the are not processed by the eval patch or the draw_notes patch. This way, the ambient noise is taken out of the picture and the playback does not get picked up by the microphone input as legitimate sounds to be evaluated. The frequency and magnitude results of the processed ADC input sound is returned by its outlets.
+
+![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/patcher_pitch.jpg)
+
+Patch #3: "Patcher MidiProcessing"
+The "MidiProcessing" patcher is the next major building block of Fiddling With Karaoke. It uses a detonate object to read Format 0 and 1 MIDI files. This is a very powerful object that can be controlled with message boxes including the words "read", "start", and "stop" and sends out just about every piece of information about a MIDI file from its outlets. These are sent from the first inlet to the patcher. The second inlet of the file takes the number of the (previously known) vocals track so that the its information about frequency and note events can be sent from the patch's two outlets. The three gates are necessary to ensure only the vocals track's information is sent to the outlets and not others. The MIDI file is also played from this patch via the noteout object below detonate. Detonate analyzes the timing parameters of each note to trigger itself with the "next" message box for playing the track appropriately.
+
+![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/patcher_MidiProcess.jpg)
+
+Patch #4: "Patcher eval"
+This patcher takes the following 4 inputs in respective order: the game's current difficulty setting, the frequency of the current adc input, the frequency of the current MIDI vocals track note, a 0 or 1 output corresponding to a current note event (the output of the second outlet of the MidiProcess patch). The first inlet serves as a switch for two switches. There are two outcomes If the game is currently in Easy Mode, the two switches will take the scaled value for the adc frequency 
 
 ##Example Usage
 (Videos are also downloadable in raw format in the website's directory)
