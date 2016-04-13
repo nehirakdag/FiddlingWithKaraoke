@@ -17,8 +17,10 @@ As I was brainstorming on what I could do for this project, I realized that the 
 
 | The MAX/MSP documentation for fiddle~ | The MAX/MSP documentation for pitch~ |
 | ------------- | ------------- |
-| ![Alt text](https://github.com/nehirakdag/Drumduino/blob/master/Images/fiddle_help.jpg)  | ![Alt text](https://github.com/nehirakdag/Drumduino/blob/master/Images/pitch_help.jpg)  |
-| [Source] (http://vud.org/max/) by Miller Puckette | [Source] (http://web.media.mit.edu/~tristan/maxmsp.html) by Tristan Jehan |
+| ![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/fiddle_help.jpg)  | ![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/pitch_help.jpg)  |
+| [Source] (http://vud.org/max/) (by Miller Puckette) | [Source] (http://web.media.mit.edu/~tristan/maxmsp.html) (by Tristan Jehan) |
+
+I also wanted a partly visual implementation for this assignment. One of the applications that immediately came to mind after coincidental use of similar commercial games, I decided to make a karaoke game which can display to the user how well they sung.
 
 #Design & Implementation
 
