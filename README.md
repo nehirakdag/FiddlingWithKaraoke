@@ -94,6 +94,14 @@ The current maximum value written to the list and the current score is returned 
 
 ![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/patcher_calc_score.jpg)
 
+Patch #7: "Patcher draw_note"
+This patcher uses Jitter objects to catch the frequency values in appropriate Jitter matrices which are sent to the jit.graph object and from there to the jit.pwindow object in the main patch for visualization. The patch takes a qmetro object, as is necessary for Jitter drawings to be sent to the jit.catch~ object (I learned about these throughout the course of my project). The other two inlets take the two frequency values to be drawn, uses sig~ objects to convert these numerical values to signals and sends them to the jit.catch~ object. The jitter matrix is sent through the outlet of the patch, ready to be turned into a graphical representation. 
+
+![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/patcher_draw_note.jpg)
+
+The patch also contains a small subpatch "catch~" that declares the attributes of the jit.catch~ object such as mode, framesize and downsample parameters.
+
+![Alt text](https://github.com/nehirakdag/FiddlingWithKaraoke/blob/master/Images/p_catch.jpg)
 
 
 
