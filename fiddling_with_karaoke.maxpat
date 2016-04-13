@@ -499,14 +499,16 @@
 				"box" : 				{
 					"fontsize" : 30.0,
 					"id" : "obj-52",
+					"linecount" : 2,
 					"maxclass" : "comment",
 					"numinlets" : 1,
 					"numoutlets" : 0,
-					"patching_rect" : [ 170.0, 137.0, 323.0, 40.0 ],
+					"patching_rect" : [ 206.5, 147.0, 323.0, 74.0 ],
 					"presentation" : 1,
-					"presentation_rect" : [ 170.0, 137.0, 323.0, 40.0 ],
+					"presentation_linecount" : 2,
+					"presentation_rect" : [ 206.5, 147.0, 323.0, 74.0 ],
 					"style" : "",
-					"text" : "FIDDLE KARAOKE"
+					"text" : "FIDDLING WITH KARAOKE"
 				}
 
 			}
@@ -811,7 +813,6 @@
 , 							{
 								"box" : 								{
 									"id" : "obj-31",
-									"int" : 1,
 									"maxclass" : "gswitch",
 									"numinlets" : 3,
 									"numoutlets" : 1,
@@ -1120,7 +1121,7 @@
 													"outlettype" : [ "" ],
 													"patching_rect" : [ 200.0, 279.0, 124.0, 23.0 ],
 													"style" : "",
-													"text" : "97.857468"
+													"text" : "3.166667"
 												}
 
 											}
